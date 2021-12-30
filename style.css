@@ -3,3 +3,36 @@
     border-radius: 5px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
 }
+
+#board{
+    border: lightgrey 1px solid;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+.dead {
+    height: 30px;
+    width: 30px;
+    border: lightgrey 1px solid;
+    
+}
+
+.row{
+    border: lightgrey 1px solid;
+    height: 30px;
+    position:relative;
+    display: flex;
+}
+
+.box:hover{
+    background: lightgrey;
+}
+
+.entity{
+    background: black;
+    height: 30px;
+    width: 30px;
+    border: lightgrey 1px solid;
+}
