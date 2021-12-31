@@ -34,17 +34,14 @@ function drawGrid(){
                 entities[String(i) + "," + String(j)] = 0;
                 gridArray[String(i) + "," + String(j)][1] = true;
                 console.log(i + " " + j);
-
             };
             gridArray[String(i) + "," + String(j)] = [];
             gridArray[String(i) + "," + String(j)].push([div , false]);
-            console.log(i + " " + j);
             document.getElementById("row" + i).append(div); 
         }
     }
 }
 function playFrame(){
-    tempList = [];
     //Finding neighbours
     if (entities.length != 0){
         for (let [key, value] of Object.entries(entities)){
@@ -52,11 +49,9 @@ function playFrame(){
             let x = parseInt(coordSplit[0]);
             let y = parseInt(coordSplit[1]);
             
-            console.log(key);
             //Counting neighbours
             for(let xx = -1; xx <= 1 ; ++xx){
                 for (let yy = -1; yy <= 1; ++yy){
-                    console.log(y + " " + yy);
                     if (xx + x< 0 || yy+ y < 0 || xx + x > numberOfSquaresHorizontal|| yy + y > numberOfSquaresVertical){
                         continue;
                     }
@@ -104,19 +99,26 @@ function playFrame(){
             gridArray[birthList[i]][1] = true;
             
         }
-        console.log(entities);
         killList = [];
         birthList = [];
+        tempList = [];
+        for (let [key, value] of Object.entries(entities)){
+            entities[key] = 0;
+        }
+        console.log(entities);
+
     }
 }
 
 function startHell(){
-    let interval = Number.isInteger(document.getElementById("intervalTime").value) ? document.getElementById("intervalTime").value : 1000;
+    let interval = isNaN(document.getElementById("intervalTime").value) ? 1000 : document.getElementById("intervalTime").value;
+    console.log(interval)
     setInterval(playFrame, interval);
 }
 
 function reset(){
     location.reload();
 }
+
 drawGrid();
 
