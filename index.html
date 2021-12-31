@@ -12,9 +12,13 @@
     <!-- <div>
         <canvas class="gameboard" id="board" width="900" height="1006"></canvas>
     </div> -->
-    <div>
-        <button>Reset</button>
+    <div class="header">
+        <button onclick="reset()">Reset</button>
+        <button onclick="startHell()">Start</button>
+        <label id="interval">Interval time (ms)</label>
+        <input type="text" id="intervalTime">
     </div>
+
     <div id="board"></div>
     <script src="app.js"></script>
 

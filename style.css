@@ -26,7 +26,7 @@
     display: flex;
 }
 
-.box:hover{
+.dead:hover{
     background: lightgrey;
 }
 
@@ -35,4 +35,15 @@
     height: 30px;
     width: 30px;
     border: lightgrey 1px solid;
+}
+
+
+.header > button{
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: 2px 2px darkgrey;
+}
+
+#interval{
+    margin-left: 10px;
 }
