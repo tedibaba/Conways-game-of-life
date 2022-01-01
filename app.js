@@ -10,12 +10,24 @@ killList= [];
 //Birth list
 birthList = [];
 
+let topLeft = [0,0];
+let bottomRight;
+let game;
 let width = window.innerWidth;
 let height = window.innerHeight;
 
 let squareSize = 30;
-let numberOfSquaresHorizontal = Math.floor(width / squareSize) - 2;
-let numberOfSquaresVertical  = Math.floor(height / squareSize) -2;
+let numberOfSquaresHorizontal = Math.floor(width / squareSize);
+let numberOfSquaresVertical  = Math.floor(height / squareSize);
+
+//This is done so that the menu does not show up
+window.addEventListener("contextmenu", e => e.preventDefault());
+
+// //Infinite grid
+// document.addEventListener("scroll", function(e){
+//     //Down scroll
+//     if ( )
+// })
 
 function drawGrid(){ 
     for (let i = 0; i < numberOfSquaresVertical; i++){
@@ -29,14 +41,22 @@ function drawGrid(){
         for (let j = 0; j < numberOfSquaresHorizontal; ++j){
             let div = document.createElement("div");
             div.setAttribute("class", "dead");
-            div.onclick = function() {
-                div.setAttribute("class", "entity");
-                entities[String(i) + "," + String(j)] = 0;
-                gridArray[String(i) + "," + String(j)][1] = true;
-                console.log(i + " " + j);
-            };
+            div.addEventListener('mouseup', function(e) {
+                if (e.button == 0){
+                    div.setAttribute("class", "entity");
+                    entities[String(i) + "," + String(j)] = 0;
+                    gridArray[String(i) + "," + String(j)][1] = true;
+                    console.log(i + " " + j);
+                } else if (e.button == 2){
+                    div.setAttribute("class", "dead");
+                    gridArray[String(i) + "," + String(j)][1] = false;
+                    delete entities[String(i) + "," + String(j)];
+                }
+                
+            });
             gridArray[String(i) + "," + String(j)] = [];
             gridArray[String(i) + "," + String(j)].push([div , false]);
+            bottomRight = [i, j];
             document.getElementById("row" + i).append(div); 
         }
     }
@@ -52,7 +72,9 @@ function playFrame(){
             //Counting neighbours
             for(let xx = -1; xx <= 1 ; ++xx){
                 for (let yy = -1; yy <= 1; ++yy){
+                    //Negative generation
                     if (xx + x< 0 || yy+ y < 0 || xx + x > numberOfSquaresHorizontal|| yy + y > numberOfSquaresVertical){
+                        negativeGeneration();
                         continue;
                     }
                     if (!tempList[String(x + xx) + "," + String(y + yy)]){
@@ -110,14 +132,24 @@ function playFrame(){
     }
 }
 
+function negativeGeneration(){
+    //100 hori and 100 verti generation
+
+}
+
 function startHell(){
     let interval = isNaN(document.getElementById("intervalTime").value) ? 1000 : document.getElementById("intervalTime").value;
     console.log(interval)
-    setInterval(playFrame, interval);
+    game =  setInterval(playFrame, interval);
 }
 
 function reset(){
     location.reload();
+}
+
+function pauseGame()
+{
+    clearInterval(game);
 }
 
 drawGrid();
